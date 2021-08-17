@@ -5,10 +5,12 @@ const { parseXML, translateDiskSpace } = require("./dav.js");
 function getQuota(options) {
     const requestOptions = {
         url: joinURL(options.remoteURL, "/"),
-        method: "PROPFIND",
+        method: "POST",
         headers: {
             Accept: "text/plain",
-            Depth: 0
+            Depth: 0,
+            // [VWORKSPACE] Fix PUT DELETE MOVE COPY PROPFIND is denine by Admin
+            'Target-Request-Method': 'PROPFIND'
         },
         responseType: "text"
     };

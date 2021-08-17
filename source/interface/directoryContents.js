@@ -8,10 +8,12 @@ const { encodePath, joinURL, prepareRequestOptions, request } = require("../requ
 function getDirectoryContents(remotePath, options) {
     const requestOptions = {
         url: joinURL(options.remoteURL, encodePath(remotePath), "/"),
-        method: "PROPFIND",
+        method: "POST",
         headers: {
             Accept: "text/plain",
-            Depth: options.deep ? "infinity" : 1
+            Depth: options.deep ? "infinity" : 1,
+            // [VWORKSPACE] Fix PUT DELETE MOVE COPY PROPFIND is denine by Admin
+            'Target-Request-Method': 'PROPFIND'
         },
         responseType: "text"
     };

@@ -7,10 +7,12 @@ const { encodePath, joinURL, prepareRequestOptions, request } = require("../requ
 function getStat(filename, options) {
     const requestOptions = {
         url: joinURL(options.remoteURL, encodePath(filename)),
-        method: "PROPFIND",
+        method: "POST",
         headers: {
             Accept: "text/plain",
-            Depth: 0
+            Depth: 0,
+            // [VWORKSPACE] Fix PUT DELETE MOVE COPY PROPFIND is denine by Admin
+            'Target-Request-Method': 'PROPFIND'
         },
         responseType: "text"
     };

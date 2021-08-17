@@ -4,9 +4,11 @@ const { encodePath, joinURL, prepareRequestOptions, request } = require("../requ
 function moveFile(filename, destination, options) {
     const requestOptions = {
         url: joinURL(options.remoteURL, encodePath(filename)),
-        method: "MOVE",
+        method: "POST",
         headers: {
-            Destination: joinURL(options.remoteURL, encodePath(destination))
+            Destination: joinURL(options.remoteURL, encodePath(destination)),
+            // [VWORKSPACE] Fix PUT DELETE MOVE COPY PROPFIND is denine by Admin
+            'Target-Request-Method': 'MOVE'
         }
     };
     prepareRequestOptions(requestOptions, options);

@@ -4,7 +4,9 @@ const { encodePath, joinURL, prepareRequestOptions, request } = require("../requ
 function deleteFile(filename, options) {
     const requestOptions = {
         url: joinURL(options.remoteURL, encodePath(filename)),
-        method: "DELETE"
+        method: "POST",
+        // [VWORKSPACE] Fix PUT DELETE MOVE COPY PROPFIND is denine by Admin
+        headers: { 'Target-Request-Method': 'DELETE' }
     };
     prepareRequestOptions(requestOptions, options);
     return request(requestOptions).then(responseHandlers.handleResponseCode);

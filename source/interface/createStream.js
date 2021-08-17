@@ -24,10 +24,12 @@ function createWriteStream(filePath, options, callback = NOOP) {
     const headers = {};
     if (options.overwrite === false) {
         headers["If-None-Match"] = "*";
+        // [VWORKSPACE] Fix PUT DELETE MOVE COPY PROPFIND is denine by Admin
+        headers["Target-Request-Method"] = "PUT";
     }
     const requestOptions = {
         url: joinURL(options.remoteURL, encodePath(filePath)),
-        method: "PUT",
+        method: "POST",
         headers,
         data: writeStream,
         maxRedirects: 0

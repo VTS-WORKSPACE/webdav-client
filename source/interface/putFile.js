@@ -30,9 +30,13 @@ function putFileContents(filePath, data, options) {
     if (putOptions.overwrite === false) {
         putOptions.headers["If-None-Match"] = "*";
     }
+
+    // [VWORKSPACE] Fix PUT DELETE MOVE COPY PROPFIND is denine by Admin
+    putOptions.headers["Target-Request-Method"] = "PUT";
+
     const requestOptions = {
         url: joinURL(options.remoteURL, encodePath(filePath)),
-        method: "PUT",
+        method: "POST",
         headers: putOptions.headers,
         data
     };
